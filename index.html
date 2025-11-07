@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blueheaven Mens Beauty Parlor</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+    <header class="app-header">
+        <h1>Blueheaven Mens Beauty Parlor</h1>
+        <nav class="top-nav">
+            <button class="nav-btn" data-view="services">Services</button>
+            <button class="nav-btn" data-view="billing">Cart & Billing</button>
+            <button class="nav-btn" data-view="manage">Manage Menu</button>
+            <button class="nav-btn" data-view="reports">Monthly Reports</button>
+        </nav>
+    </header>
+
+    <main class="container">
+        <!-- Services View -->
+        <section id="view-services" class="view active">
+            <div class="toolbar">
+                <input id="service-search" type="search" placeholder="Search services..." />
+            </div>
+            <div id="services-grid" class="grid"></div>
+        </section>
+
+        <!-- Billing View -->
+        <section id="view-billing" class="view">
+            <div class="billing-layout">
+                <div class="cart-panel">
+                    <h2>Cart</h2>
+                    <div id="cart-empty" class="muted">Cart is empty. Click a service to add.</div>
+                    <div class="table-wrapper">
+                        <table id="cart-table" class="table hidden">
+                            <thead>
+                                <tr>
+                                    <th>Item</th>
+                                    <th>Price</th>
+                                    <th>Qty</th>
+                                    <th>Subtotal</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody id="cart-body"></tbody>
+                        </table>
+                    </div>
+                    <div class="cart-actions">
+                        <button id="clear-cart" class="btn secondary">Clear Cart</button>
+                    </div>
+                </div>
+                <div class="bill-panel">
+                    <h2>Bill</h2>
+                    <div id="bill-summary">
+                        <div class="row"><span>Items</span><span id="sum-items">0</span></div>
+                        <div class="row"><span>Subtotal</span><span id="sum-subtotal">₹0.00</span></div>
+                        <div class="row total"><span>Total</span><span id="sum-total">₹0.00</span></div>
+                    </div>
+                    <div class="bill-actions">
+                        <button id="print-bill" class="btn outline">Print Bill</button>
+                        <input type="file" id="upload-proof" accept="image/*,.pdf" class="hidden" />
+                        <button id="upload-btn" class="btn primary">Upload</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Printable Bill -->
+            <div id="printable" class="printable">
+                <h2>Blueheaven Mens Beauty Parlor</h2>
+                <p class="muted">Thank you for your visit!</p>
+                <div class="table-wrapper">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Item</th>
+                                <th>Price</th>
+                                <th>Qty</th>
+                                <th>Subtotal</th>
+                            </tr>
+                        </thead>
+                        <tbody id="print-rows"></tbody>
+                    </table>
+                </div>
+                <div class="print-totals">
+                    <div><strong>Subtotal:</strong> <span id="print-subtotal">₹0.00</span></div>
+                    <div class="total"><strong>Total:</strong> <span id="print-total">₹0.00</span></div>
+                    <div class="muted" id="print-time"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Manage Menu View -->
+        <section id="view-manage" class="view">
+            <h2>Manage Menu</h2>
+            <form id="service-form" class="card">
+                <input type="hidden" id="service-id" />
+                <div class="form-grid">
+                    <div class="form-field">
+                        <label for="service-name">Name</label>
+                        <input id="service-name" type="text" placeholder="Service name" required />
+                    </div>
+                    <div class="form-field">
+                        <label for="service-price">Price (₹)</label>
+                        <input id="service-price" type="number" min="0" step="1" placeholder="e.g., 199" required />
+                    </div>
+                    <div class="form-field">
+                        <label for="service-image-file">Upload Image</label>
+                        <input id="service-image-file" type="file" accept="image/*" />
+                        <img id="service-image-preview" alt="Preview" style="margin-top:8px;max-width:180px;border-radius:8px;border:1px solid var(--border);display:none;" />
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn primary" id="btn-save">Save</button>
+                    <button type="button" class="btn secondary" id="btn-reset">Reset</button>
+                </div>
+            </form>
+
+            <div class="grid" id="manage-list"></div>
+        </section>
+
+        <!-- Reports View -->
+        <section id="view-reports" class="view">
+            <div class="report-tabs">
+                <button class="tab-btn active" data-tab="daily">Daily</button>
+                <button class="tab-btn" data-tab="weekly">Weekly</button>
+                <button class="tab-btn" data-tab="monthly">Monthly</button>
+                <button class="tab-btn" data-tab="yearly">Yearly</button>
+            </div>
+            <h2 id="report-title">Daily Sales Report</h2>
+            <div class="toolbar">
+                <label>
+                    From
+                    <input type="date" id="report-from" />
+                </label>
+                <label>
+                    To
+                    <input type="date" id="report-to" />
+                </label>
+                <button id="report-filter" class="btn">Filter</button>
+                <button id="report-clear" class="btn secondary">Clear</button>
+            </div>
+            <div class="table-wrapper">
+                <table class="table" id="report-table">
+                    <thead>
+                        <tr>
+                            <th id="col-period">Date</th>
+                            <th>Orders</th>
+                            <th>Items</th>
+                            <th>Total (₹)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="report-body"></tbody>
+                    <tfoot>
+                        <tr class="total">
+                            <td>Grand Total</td>
+                            <td id="report-orders">0</td>
+                            <td id="report-items">0</td>
+                            <td id="report-amount">₹0.00</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+            <div id="daily-breakdown" class="card hidden" style="margin-top:12px;padding:12px;">
+                <h3>Daily Service Breakdown</h3>
+                <div id="breakdown-date" class="muted"></div>
+                <div class="table-wrapper">
+                    <table class="table" style="margin-top:8px;">
+                        <thead>
+                            <tr>
+                                <th>Service</th>
+                                <th>Qty</th>
+                                <th>Subtotal</th>
+                            </tr>
+                        </thead>
+                        <tbody id="breakdown-body"></tbody>
+                        <tfoot>
+                            <tr class="total">
+                                <td colspan="2">Total</td>
+                                <td id="breakdown-total">₹0.00</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="app-footer">
+        <span>© <span id="year"></span> Blueheaven Mens Beauty Parlor</span>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast hidden"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>
+
+
