@@ -57,15 +57,28 @@ body > * {
   backdrop-filter: blur(30px) saturate(180%);
   -webkit-backdrop-filter: blur(30px) saturate(180%);
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-  padding: 12px 16px;
+  padding: 16px;
   box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+  text-align: center;
 }
 .app-header h1 {
-  margin: 0 0 8px 0;
-  font-size: 20px;
-  font-weight: 700;
-  color: #ffffff;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  margin: 0 0 12px 0;
+  font-size: 28px;
+  font-weight: 800;
+  font-family: 'Segoe UI', 'Arial Black', 'Trebuchet MS', sans-serif;
+  background: linear-gradient(135deg, #ffd700 0%, #ffffff 30%, #e8e8e8 50%, #4a90e2 70%, #357abd 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 0 40px rgba(255, 215, 0, 0.6);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  filter: drop-shadow(0 3px 10px rgba(0, 0, 0, 0.4));
+  animation: shimmer 3s ease-in-out infinite;
+}
+@keyframes shimmer {
+  0%, 100% { filter: drop-shadow(0 3px 10px rgba(0, 0, 0, 0.4)) brightness(1); }
+  50% { filter: drop-shadow(0 3px 15px rgba(255, 215, 0, 0.6)) brightness(1.1); }
 }
 .top-nav { display: flex; gap: 8px; flex-wrap: wrap; }
 .nav-btn {
@@ -266,6 +279,18 @@ body > * {
 .cart-panel h2, .bill-panel h2 {
   color: #ffffff;
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+.cart-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+.cart-actions .btn {
+  width: 100%;
 }
 #bill-summary { display: flex; flex-direction: column; gap: 8px; }
 #bill-summary .row { display: flex; justify-content: space-between; }
@@ -274,6 +299,11 @@ body > * {
 
 .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
 .form-field { display: flex; flex-direction: column; gap: 6px; }
+.form-field label {
+  color: #ffffff;
+  font-weight: 500;
+  font-size: 14px;
+}
 .form-field input { 
   background: rgba(255, 255, 255, 0.1);
   color: var(--text);
@@ -291,7 +321,25 @@ body > * {
   box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.3);
   background: rgba(255, 255, 255, 0.12);
 }
-.form-actions { display: flex; gap: 8px; margin-top: 12px; }
+.form-field input[type="file"] {
+  padding: 8px 12px;
+  cursor: pointer;
+}
+.form-actions { display: flex; gap: 8px; margin-top: 16px; }
+
+/* Form card padding */
+#service-form.card {
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+/* Manage Menu section */
+#view-manage h2 {
+  color: #ffffff;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  margin-bottom: 20px;
+  font-size: 24px;
+}
 
 /* Report titles */
 #report-title { color: #ffffff; text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); }
@@ -372,9 +420,13 @@ body > * {
 /* Mobile Responsive Styles */
 @media (max-width: 640px) {
   /* Header */
-  .app-header { padding: 10px 12px; }
-  .app-header h1 { font-size: 18px; margin-bottom: 6px; }
-  .top-nav { gap: 6px; }
+  .app-header { padding: 12px; }
+  .app-header h1 { 
+    font-size: 22px; 
+    margin-bottom: 8px;
+    letter-spacing: 0.5px;
+  }
+  .top-nav { justify-content: center; gap: 6px; }
   .nav-btn { padding: 6px 10px; font-size: 13px; flex: 1 1 calc(50% - 3px); min-width: 0; min-height: 36px; }
   
   /* Container */
@@ -397,24 +449,39 @@ body > * {
   
   /* Billing */
   .billing-layout { gap: 12px; }
-  .cart-panel, .bill-panel { padding: 10px; }
-  .cart-panel h2, .bill-panel h2 { font-size: 18px; margin-top: 0; }
+  .cart-panel, .bill-panel { padding: 12px; }
+  .cart-panel h2, .bill-panel h2 { font-size: 18px; margin-bottom: 12px; }
+  .cart-actions {
+    margin-top: 12px;
+    padding-top: 12px;
+  }
   #bill-summary .total { font-size: 16px; }
   .bill-actions { flex-direction: column; }
   .bill-actions .btn { width: 100%; }
   
   /* Forms */
   .form-grid { grid-template-columns: 1fr; }
+  #service-form.card {
+    padding: 16px;
+    margin-bottom: 16px;
+  }
   .form-field input { 
     padding: 8px 10px; 
     font-size: 14px;
-    background: var(--glass-bg);
-    border: 1px solid var(--glass-border);
-    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(15px);
   }
-  .form-actions { flex-direction: column; }
+  .form-field input[type="file"] {
+    padding: 6px 10px;
+  }
+  .form-actions { flex-direction: column; margin-top: 12px; }
   .form-actions .btn { width: 100%; }
   #service-image-preview { max-width: 100%; }
+  #view-manage h2 {
+    font-size: 20px;
+    margin-bottom: 16px;
+  }
   
   /* Toolbar */
   .toolbar { gap: 8px; }
